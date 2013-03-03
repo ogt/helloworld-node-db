@@ -1,7 +1,7 @@
 Simplest possible hello world heroku node.js app that uses express and mongodb to provide a basic login/register functionality
 
 - Here is the github repo : https://github.com/ogt/helloworld-node-db
-- Here is the heroku app : /  (20+ sec delay at first fetch)
+- Here is the heroku app : http://helloworld-node-db.herokuapp.com  (20+ sec delay at first fetch)
 - Here is the blog post about this : http://otdump.blogspot.com/2013/03/worknotes-helloworld-with-db.html
 
 Run locally as
