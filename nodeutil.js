@@ -1,31 +1,31 @@
 
 var Fiber = require('fibers')
 
-_.slurp = function (f) {
+_u.slurp = function (f) {
     return '' + require('fs').readFileSync(f)
 }
 
-_.save = function (f, s) {
+_u.save = function (f, s) {
     require('fs').writeFileSync(f, s)
 }
 
-_.print = function (o) {
+_u.print = function (o) {
     if (typeof(o) == 'object') {
-        console.log(_.json(o, true))
+        console.log(_u.json(o, true))
     } else {
         console.log(o)
     }
 }
 
-_.exit = function () {
+_u.exit = function () {
     process.exit(1)
 }
 
-_.md5 = function (s) {
+_u.md5 = function (s) {
     return require('crypto').createHash('md5').update(s).digest("hex")    
 }
 
-_.run = function (f) {
+_u.run = function (f) {
     var c = Fiber.current
     if (c) c.yielding = true
     if (typeof(f) == 'function')
@@ -37,11 +37,11 @@ _.run = function (f) {
     return ret
 }
 
-_.yield = function () {
+_u.yield = function () {
     return Fiber.yield()
 }
 
-_.promise = function () {
+_u.promise = function () {
     var f = Fiber.current
     var done = false
     var val = null
@@ -49,18 +49,18 @@ _.promise = function () {
         set : function (v) {
             done = true
             val = v
-            _.run(f)
+            _u.run(f)
         },
         get : function () {
-            while (!done) _.yield()
+            while (!done) _u.yield()
             done = false
             return val
         }
     }
 }
 
-_.promiseErr = function () {
-    var p = _.promise()
+_u.promiseErr = function () {
+    var p = _u.promise()
     return {
         set : function (err, data) {
             p.set([err, data])
@@ -73,7 +73,7 @@ _.promiseErr = function () {
     }
 }
 
-_.consume = function (input, encoding) {
+_u.consume = function (input, encoding) {
     if (encoding == 'buffer') {
         var buffer = new Buffer(1 * input.headers['content-length'])
         var cursor = 0
@@ -82,7 +82,7 @@ _.consume = function (input, encoding) {
         input.setEncoding(encoding || 'utf8')
     }
     
-    var p = _.promise()
+    var p = _u.promise()
     input.on('data', function (chunk) {
         if (encoding == 'buffer') {
             chunk.copy(buffer, cursor)
@@ -101,7 +101,7 @@ _.consume = function (input, encoding) {
     return p.get()
 }
 
-_.wget = function (url, params, encoding) {
+_u.wget = function (url, params, encoding) {
     url = require('url').parse(url)
     
     var o = {
@@ -120,7 +120,7 @@ _.wget = function (url, params, encoding) {
             "Content-Length" : data.length
         }
     } else {
-        data = _.values(_.map(params, function (v, k) { return k + "=" + encodeURIComponent(v) })).join('&')
+        data = _u.values(_u.map(params, function (v, k) { return k + "=" + encodeURIComponent(v) })).join('&')
         
         o.headers = {
             "Content-Type" : "application/x-www-form-urlencoded",
@@ -130,10 +130,10 @@ _.wget = function (url, params, encoding) {
         dataEnc = "utf8"
     }
     
-    var p = _.promise()
+    var p = _u.promise()
     var req = require(url.protocol.replace(/:/, '')).request(o, function (res) {
-        _.run(function () {
-            p.set(_.consume(res, encoding))
+        _u.run(function () {
+            p.set(_u.consume(res, encoding))
         })
     })
     req.end(data, dataEnc)

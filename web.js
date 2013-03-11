@@ -1,8 +1,9 @@
 require('./u.js')
 require('./nodeutil.js')
 
-_.run(function () {
-
+_u.run(function () {
+    var db = require('mongojs').connect(process.env.MONGOLAB_URI, ['users'])
+	var p = _u.promiseErr()
 	var express = require('express');
 	var app = express();
 
@@ -12,8 +13,8 @@ _.run(function () {
 	app.use(express.errorHandler({dumpExceptions: true, showStack: true}));
 	app.use(express.cookieParser())
 	app.use(function (req, res, next) {
-		_.run(function () {
-			req.body = _.consume(req)
+		_u.run(function () {
+			req.body = _u.consume(req)
 		    next()
 		})
 	})
@@ -31,10 +32,18 @@ _.run(function () {
 		},
 
 		register : function (arg, req, res) {
-			fields.forEach( function(field) {
-			    res.cookie(field, arg[field]);
-			})
-			return true;
+			var username = arg['username']
+			var p = _u.promiseErr()
+			db.users.find({ username : username}, p.set)
+			users = p.get()
+			if (_u.size(users) >0 ) {
+				return [false, 'There is already a user named "'+username+'" : '+JSON.stringify(users)];
+			}
+			userinfo = fields.map(function(el) { return arg[el] })
+			db.users.save(userinfo, p.set); 
+
+			res.cookie('username', username);
+			return [true];
 		},
 
 		logout : function(arg, req, res) {
@@ -45,11 +54,19 @@ _.run(function () {
 		},
 
 		getUser : function (arg, req, res) {
-			var userInfo = {}
-			fields.forEach( function(field) {
-				userInfo[field] = req.cookies[field]
-			})
-			return userInfo
+			var username = req.cookies['username']
+			if (!username) {
+				return {};
+			}
+			var p = _u.promiseErr()			
+			if (db.users) {
+				db.users.find({ username : username}, p.set)
+			}
+			users = p.get()
+			if (!users) {
+				throw('User "'+username+'"  is not registered');
+			}
+			return users[0]
 		}
 	}))
 

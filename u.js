@@ -10,17 +10,17 @@
 // every
 // some
 
-_ = (function () {
-var _ = {}
+_u = (function () {
+var _u = {}
 
-_.has = function (o, k) {
+_u.has = function (o, k) {
     return o.hasOwnProperty(k)
 }
 
-_.identity = function (e) { return e }
+_u.identity = function (e) { return e }
 
-_.each = function (o, func) {
-    if (!func) func = _.identity
+_u.each = function (o, func) {
+    if (!func) func = _u.identity
     if (o instanceof Array) {
         for (var i = 0; i < o.length; i++)
             if (func(o[i], i) == false)
@@ -33,8 +33,8 @@ _.each = function (o, func) {
     }
 }
 
-_.map = function (o, func) {
-    if (!func) func = _.identity
+_u.map = function (o, func) {
+    if (!func) func = _u.identity
     if (o instanceof Array)
         return o.map(func)
     var accum = {}
@@ -44,8 +44,8 @@ _.map = function (o, func) {
     return accum
 }
 
-_.filter = function (o, func) {
-    if (!func) func = _.identity
+_u.filter = function (o, func) {
+    if (!func) func = _u.identity
     if (o instanceof Array)
         return o.filter(func)
     var accum = {}
@@ -56,8 +56,8 @@ _.filter = function (o, func) {
     return accum
 }
 
-_.reduce = _.fold = function (o, func, init) {
-    if (!func) func = _.identity
+_u.reduce = _u.fold = function (o, func, init) {
+    if (!func) func = _u.identity
     if (o instanceof Array)
         return o.reduce(func, init)
     var accum = init
@@ -67,8 +67,8 @@ _.reduce = _.fold = function (o, func, init) {
     return accum
 }
 
-_.some = _.any = function (o, func) {
-    if (!func) func = _.identity
+_u.some = _u.any = function (o, func) {
+    if (!func) func = _u.identity
     if (o instanceof Array)
         return o.some(func)
     for (var k in o)
@@ -77,8 +77,8 @@ _.some = _.any = function (o, func) {
     return false
 }
 
-_.every = _.all = function (o, func) {
-    if (!func) func = _.identity
+_u.every = _u.all = function (o, func) {
+    if (!func) func = _u.identity
     if (o instanceof Array)
         return o.every(func)
     for (var k in o)
@@ -87,11 +87,11 @@ _.every = _.all = function (o, func) {
     return true
 }
 
-_.min = function (o, func) {
-    if (!func) func = _.identity
+_u.min = function (o, func) {
+    if (!func) func = _u.identity
     var bestScore = null
     var best = null
-    _.each(o, function (v, k) {
+    _u.each(o, function (v, k) {
         var score = func(v, k)
         if (bestScore === null || score < bestScore) {
             bestScore = score
@@ -101,11 +101,11 @@ _.min = function (o, func) {
     return best
 }
 
-_.max = function (o, func) {
-    if (!func) func = _.identity
+_u.max = function (o, func) {
+    if (!func) func = _u.identity
     var bestScore = null
     var best = null
-    _.each(o, function (v, k) {
+    _u.each(o, function (v, k) {
         var score = func(v, k)
         if (bestScore === null || score > bestScore) {
             bestScore = score
@@ -115,10 +115,10 @@ _.max = function (o, func) {
     return best
 }
 
-_.find = function (o, func) {
-    if (!func) func = _.identity
+_u.find = function (o, func) {
+    if (!func) func = _u.identity
     var found = null
-    _.each(o, function (v, k) {
+    _u.each(o, function (v, k) {
         if (func(v, k)) {
             found = v
             return false
@@ -127,146 +127,146 @@ _.find = function (o, func) {
     return found
 }
 
-_.size = function (o) {
+_u.size = function (o) {
     if (o instanceof Array)
         return o.length
-    return _.keys(o).length
+    return _u.keys(o).length
 }
 
-_.deepEquals = function (a, b) {
+_u.deepEquals = function (a, b) {
     if (typeof(a) != typeof(b)) return false
     if (typeof(a) == 'object') {
-        return _.size(a) == _.size(b) && _.all(a, function (v, k) {
-            return _.has(b, k) && _.deepEquals(b[k], v)
+        return _u.size(a) == _u.size(b) && _u.all(a, function (v, k) {
+            return _u.has(b, k) && _u.deepEquals(b[k], v)
         })
     } else {
         return a == b
     }
 }
 
-_.keys = function (o) {
+_u.keys = function (o) {
     return Object.keys(o)
 }
 
-_.values = function (o) {
+_u.values = function (o) {
     var accum = []
-    _.each(o, function (e) {
+    _u.each(o, function (e) {
         accum.push(e)
     })
     return accum
 }
 
-_.extend = function (o, that) {
-    _.each(that, function (v, k) {
+_u.extend = function (o, that) {
+    _u.each(that, function (v, k) {
         o[k] = v
     })
     return o
 }
 
-_.pairs = function (o) {
+_u.pairs = function (o) {
     var accum = []
-    _.each(o, function (v, k) {
+    _u.each(o, function (v, k) {
         accum.push([k, v])
     })
     return accum
 }
 
-_.object = _.unPairs = function (a, b) {
+_u.object = _u.unPairs = function (a, b) {
     var accum = {}
     if (b) {
-        _.each(a, function (k, i) {
+        _u.each(a, function (k, i) {
             accum[k] = b[i]
         })
     } else {
-        _.each(a, function (e) {
+        _u.each(a, function (e) {
             accum[e[0]] = e[1]
         })
     }
     return accum
 }
 
-_.pick = function (o) {
+_u.pick = function (o) {
     var accum = {}
     for (var i = 1; i < arguments.length; i++) {
         var k = arguments[i]
-        if (_.has(o, k)) accum[k] = o[k]
+        if (_u.has(o, k)) accum[k] = o[k]
     }
     return accum
 }
 
-_.omit = function (o) {
-    var omits = _.makeSet(_.toArray(arguments).slice(1))
+_u.omit = function (o) {
+    var omits = _u.makeSet(_u.toArray(arguments).slice(1))
     var accum = {}
-    _.each(o, function (v, k) {
-        if (!_.has(omits, k))
+    _u.each(o, function (v, k) {
+        if (!_u.has(omits, k))
             accum[k] = v
     })
     return accum
 }
 
-_.setAdd = function (s, key) {
-    if (!_.has(s, key) || !s[key])
+_u.setAdd = function (s, key) {
+    if (!_u.has(s, key) || !s[key])
         return s[key] = true
     return false
 }
 
-_.makeSet = function (a) {
+_u.makeSet = function (a) {
     var s = {}
-    _.each(a, function (e) {
+    _u.each(a, function (e) {
         s[e] = true
     })
     return s
 }
 
-_.inSet = function (s, x) {
-    return _.has(s, x) && s[x]
+_u.inSet = function (s, x) {
+    return _u.has(s, x) && s[x]
 }
 
-_.setSub = function (a, b) {
+_u.setSub = function (a, b) {
     var c = {}
-    _.each(a, function (v, k) {
-        if (!_.inSet(b, k))
+    _u.each(a, function (v, k) {
+        if (!_u.inSet(b, k))
             c[k] = v
     })
     return c
 }
 
-_.bagAdd = function (bag, key, amount) {
+_u.bagAdd = function (bag, key, amount) {
     if (amount == null) amount = 1
-    if (!_.has(bag, key))
+    if (!_u.has(bag, key))
         bag[key] = 0
     bag[key] += amount
     return bag[key]
 }
 
-_.lerp = function (t0, v0, t1, v1, t) {
+_u.lerp = function (t0, v0, t1, v1, t) {
     return (t - t0) * (v1 - v0) / (t1 - t0) + v0
 }
 
-_.time = function () {
+_u.time = function () {
     return new Date().getTime()
 }
 
-_.trim = function (s) {
+_u.trim = function (s) {
     return s.replace(/^\s+|\s+$/g,"")
 }
 
-_.lines = function (s) {
+_u.lines = function (s) {
     return s.split(/\r\n|\r|\n/)
 }
 
-_.sum = function (a) {
-    return _.fold(a, function (a, b) { return a + b }, 0)
+_u.sum = function (a) {
+    return _u.fold(a, function (a, b) { return a + b }, 0)
 }
 
-_.sample = function (o) {
+_u.sample = function (o) {
     if (o instanceof Array)
         return o[Math.floor(o.length * Math.random())]
     else
-        return _.sample(_.values(o))
+        return _u.sample(_u.values(o))
 }
 
-_.shuffle = function (a) {
+_u.shuffle = function (a) {
     for (var i = 0; i < a.length; i++) {
         var ri = Math.floor(a.length * Math.random())
         var temp = a[i]
@@ -276,26 +276,26 @@ _.shuffle = function (a) {
     return a
 }
 
-_.toArray = function (a) {
+_u.toArray = function (a) {
     var accum = []
     for (var i = 0; i < a.length; i++)
         accum[i] = a[i]
     return accum
 }
 
-_.ensure = function () {
+_u.ensure = function () {
     if (arguments.length <= 3) {
         if (!(arguments[1] in arguments[0])) {
             arguments[0][arguments[1]] = arguments[2]
         }
         return arguments[0][arguments[1]]
     }
-    var args = _.toArray(arguments)
-    var prev = _.ensure.apply(null, args.slice(0, 2).concat([typeof(args[2]) == "string" ? {} : []]))
-    return _.ensure.apply(null, [prev].concat(args.slice(2)))
+    var args = _u.toArray(arguments)
+    var prev = _u.ensure.apply(null, args.slice(0, 2).concat([typeof(args[2]) == "string" ? {} : []]))
+    return _u.ensure.apply(null, [prev].concat(args.slice(2)))
 }
 
-_.escapeUnicodeChar = function (c) {
+_u.escapeUnicodeChar = function (c) {
     var code = c.charCodeAt(0)
     var hex = code.toString(16)
     if (code < 16) return '\\u000' + hex
@@ -304,7 +304,7 @@ _.escapeUnicodeChar = function (c) {
     return '\\u' + hex
 }
 
-_.escapeString = function (s) {
+_u.escapeString = function (s) {
     return s.
         replace(/\\/g, '\\\\').
         replace(/\t/g, '\\t').
@@ -312,22 +312,22 @@ _.escapeString = function (s) {
         replace(/\r/g, '\\r').
         replace(/'/g, '\\\'').
         replace(/"/g, '\\\"').
-        replace(/[\u0000-\u001F]|[\u0080-\uFFFF]/g, _.escapeUnicodeChar)
+        replace(/[\u0000-\u001F]|[\u0080-\uFFFF]/g, _u.escapeUnicodeChar)
 }
 
-_.escapeRegExp = function (s) {
-    return _.escapeString(s).replace(/([\{\}\(\)\|\[\]\^\$\.\*\+\?])/g, "\\$1")
+_u.escapeRegExp = function (s) {
+    return _u.escapeString(s).replace(/([\{\}\(\)\|\[\]\^\$\.\*\+\?])/g, "\\$1")
 }
 
-_.escapeUrl = function (s) {
+_u.escapeUrl = function (s) {
     return encodeURIComponent(s)
 }
 
-_.unescapeUrl = function (s) {
+_u.unescapeUrl = function (s) {
     return decodeURIComponent(s.replace(/\+/g, "%20"))
 }
 
-_.escapeXml = function (s) {
+_u.escapeXml = function (s) {
     s = s.replace(/&/g, "&amp;")
     s = s.replace(/</g, "&lt;").
         replace(/>/g, "&gt;").
@@ -344,7 +344,7 @@ _.escapeXml = function (s) {
     return s;
 }
 
-_.unescapeXml = function (s) {
+_u.unescapeXml = function (s) {
     return s.replace(/&[^;]+;/g, function (s) {
         switch(s.substring(1, s.length - 1)) {
             case "amp":  return "&";
@@ -372,7 +372,7 @@ function splitSizeHelper(prefix, size) {
     return prefix + '="' + size + 'px"'
 }
 
-_.splitHorz = function (aSize, bSize, a, b, fill) {
+_u.splitHorz = function (aSize, bSize, a, b, fill) {
     if (fill === undefined) fill = true
     if (arguments.length == 3) {
         // backwards compatibility
@@ -394,7 +394,7 @@ _.splitHorz = function (aSize, bSize, a, b, fill) {
     return t
 }
 
-_.splitVert = function (aSize, bSize, a, b, fill) {
+_u.splitVert = function (aSize, bSize, a, b, fill) {
     if (fill === undefined) fill = true
     if (arguments.length == 3) {
         // backwards compatibility
@@ -416,7 +416,7 @@ _.splitVert = function (aSize, bSize, a, b, fill) {
     return t
 }
 
-_.dialog = function (content) {
+_u.dialog = function (content) {
     var win = $(window)
     var w = win.width()
     var h = win.height()
@@ -435,13 +435,13 @@ _.dialog = function (content) {
         })
     }, 0)
     
-    _.closeDialog = function () {
+    _u.closeDialog = function () {
         b.remove()
         d.remove()
     }
 }
 
-_.decycle = function(o) {
+_u.decycle = function(o) {
     var rootKey = "root_" + Math.round(Math.random() * 1000)
     var uniqueObj = {}
     while (true) {
@@ -508,7 +508,7 @@ _.decycle = function(o) {
     }
 }
 
-_.recycle = function (obj) {
+_u.recycle = function (obj) {
     // regex adapted from https://github.com/douglascrockford/JSON-js/blob/master/cycle.js
     var r = /^root(?:_\d+)?(?:\[(?:\d+|\"(?:[^\\\"\u0000-\u001f]|\\([\\\"\/bfnrt]|u[0-9a-zA-Z]{4}))*\")\])*$/
     
@@ -539,22 +539,22 @@ _.recycle = function (obj) {
     return helper(obj[rootKey])
 }
 
-_.json = function (x, pretty) {
+_u.json = function (x, pretty) {
     try {
         return JSON.stringify(x, null, pretty === true ? "    " : pretty)
     } catch (e) {
-        return _.json(_.decycle(x), pretty)
+        return _u.json(_u.decycle(x), pretty)
     }
 }
 
-_.unJson = function (s) {
+_u.unJson = function (s) {
     var o = JSON.parse(s)
     try {
-        return _.recycle(o)
+        return _u.recycle(o)
     } catch (e) {
         return o
     }
 }
 
-return _
+return _u
 })();

@@ -27,7 +27,7 @@ a:link {text-decoration:none;}
 </head>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script src="https://raw.github.com/dglittle/myutil/master/u.js"></script>
+<script src="https://raw.github.com/odysseas/helloworld-node-db/master/u.js"></script>
 <script src="https://raw.github.com/dglittle/myutil/master/jquery.timeago.js"></script>
 <script>
 
@@ -41,7 +41,7 @@ function onError(msg) {
         e.preventDefault()
         location.reload()
     }))
-    _.dialog(div)
+    _u.dialog(div)
 }
 
 var g_rpc = []
@@ -53,7 +53,7 @@ function rpc(func, arg, cb) {
         $.ajax({
             url : '/rpc',
             type : 'post',
-            data : _.json(_.map(save_rpc, function (e) { return e.payload })),
+            data : _u.json(_u.map(save_rpc, function (e) { return e.payload })),
             success : function (r) {
                 for (var i = 0; i < r.length; i++) {
                     if (save_rpc[i].cb)
@@ -121,7 +121,12 @@ function drawRegisterForm() {
         fields.forEach(function(el){
             payload[el[1]] = $('#'+el[1]).val()
         })
-        res = rpc('register', payload, function() {  location.reload() })
+        res = rpc('register', payload, function(result) {  
+            if (!result[0]) {
+                alert(result[1])
+            }
+            location.reload() 
+        })
         rpc()
         return false
     }
@@ -164,7 +169,7 @@ function displayUnsigned(targettext){
 function rpc_getUser() {
     rpc('getUser', null, function (user) {
         g_user = user
-        if (_.has(user,'username')) 
+        if (_u.has(user,'username')) 
             displaySignedIn();
         else 
             displayUnsigned();
@@ -182,7 +187,7 @@ $(function () {
     top.append(g_upperLeft)
     top.append(g_upperRight)
     top.append($('<div style="clear:both"/>'))
-    $('body').append(_.splitVert(0.01, null, top, g_output)).append($('<hr style="margin:0px;padding:0px"/>'))
+    $('body').append(_u.splitVert(0.01, null, top, g_output)).append($('<hr style="margin:0px;padding:0px"/>'))
 
     rpc_getUser()
     rpc()
