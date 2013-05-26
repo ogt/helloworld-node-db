@@ -30,4 +30,4 @@ Run on heroku as
 > heroku open
 ```
 
-Previous iteration of this app is https://github.com/ogt/helloworld-node-db
+Previous iteration of this app is https://github.com/ogt/helloworld-node-cookies
