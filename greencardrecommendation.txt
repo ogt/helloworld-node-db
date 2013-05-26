@@ -1,0 +1,11 @@
+I, Nagi Prabhu, Vice President of Cloud Identity and Security at Arcot Systems and previously Senior Vice President at RealPage, Inc. and Senior Vice President at Symphony Services, am  writing to verify that I have worked with Mr. Karamanlakis from 2001 to 2002 while I was the Vice President of Engineering of Intacct Corp.
+
+During this period, he was hired as an software consultant with the responsibility to
+
+design and develop a Microsoft Windows desktop application that allowed Intacct users to export accounting data from the Intacct web-based enterprise accounting system for offline access on their PC as well as the import module from the Intuit Quickbooks accounting software, and 
+design and develop a Microsoft Windows desktop application that allowed Intacct users to work in an efficient manner on their PC; the application was the first commercial Microsoft .Net application to make extensive use of the Intacct web-services platform and support offline operation and data synchronization.
+
+Intacct Corp. provides a suite of financial applications to SMB companies and CPA firms. Mr. Efstratios Karamanlakis demonstrated outstanding engineering skills as well as solid grasp of concepts and processes of the accounting domain as he integrated with the Intacct Web APIs.
+He had an exceptional ability to collaborate remotely with a team of various cross-functional stakeholders. He proceeded from project definition to systematic collection of all necessary project requirements, negotiation of scope and priorities and finally delivery in time and in high quality.
+
+Please do not hesitate to contact me if you have any further questions.

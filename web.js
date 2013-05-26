@@ -63,8 +63,8 @@ _u.run(function () {
 				db.users.find({ username : username}, p.set)
 			}
 			users = p.get()
-			if (!users) {
-				throw('User "'+username+'"  is not registered');
+			if (_u.size(users) == 0) {
+				throw('Cookied User "'+username+'"  is not registered');
 			}
 			return users[0]
 		}
